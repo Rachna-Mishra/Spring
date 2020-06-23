@@ -19,5 +19,25 @@ public enum Teams {
     {
         return this.playerList;
     }
+    public static void addPlayerDetails()
+    {
+        Teams[] teams = Teams.values();
+        for (Teams team : teams) {
+          List<String> players=team.getPlayerList();
+          for(String playerName:players)
+          {
+            ScoreBoard.addDetail(playerName,team, PlayersDetail.PlayerType.BATSMAN,0,0,0);
+          }
+        }
+    }
+
+    public static List<String> retrivePlayerList(String teamPlaying) {
+        Teams[] teams = Teams.values();
+        for (Teams team : teams) {
+            if (team.name().equalsIgnoreCase(teamPlaying))
+                return team.getPlayerList();
+        }
+        return null;
+    }
 
 }
