@@ -15,6 +15,7 @@ public class CricketGame {
 
             System.out.println("Number of teams participating in this match range upto 4");
             int noOfTeams=sc.nextInt();
+            Teams.addPlayerDetails();
 
             // Selection Of Teams
             TeamsSelected ts=new TeamsSelected(noOfTeams);
@@ -58,6 +59,9 @@ public class CricketGame {
             MatchController m=new MatchController();
             Match match=new Match(noOfOvers);
             System.out.println(m.returnResult(match,selectedTeamForBatting,selectedTeamForBowling));
+            //Adding Player Details
+
+          ScoreBoard.displayScoreBoard(selectedTeamForBatting,selectedTeamForBowling);
         }
     }
 }

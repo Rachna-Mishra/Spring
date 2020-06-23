@@ -6,8 +6,6 @@ import java.util.Random;
 
 public class TeamsSelected {
     int noOfTeams;
-    //int teams[];
-   // int selectedTeams[]=new int[2];
     List<String> selectedTeams=new ArrayList<String>();
 
     TeamsSelected(int noOfTeams)
