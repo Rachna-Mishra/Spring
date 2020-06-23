@@ -8,18 +8,24 @@ public class Match {
     private static int totalWicketsOfTeam;
     private static String currentPlayerOnStrike;
     private static String currentPlayerOnPitch;
+    private static int totalScoreOfPLayerOnStrike=0;
+    private static int totalScoreOfPlayerOnPitch=0;
+    private static int totalBallsPlayed=0;
 
     Match(int noOfOvers) {
         this.noOfOvers = noOfOvers;
     }
 
     public int calculateScore(String teamPlaying) {
-        List<String> playerList = Match.retrivePlayerList(teamPlaying);
+        List<String> playerList = Teams.retrivePlayerList(teamPlaying);
         int sequenceNo = 0;
         currentPlayerOnStrike = playerList.get(sequenceNo++);
         currentPlayerOnPitch = playerList.get(sequenceNo++);
         int score = 0;
         totalWicketsOfTeam = 0;
+        totalScoreOfPLayerOnStrike=0;
+        totalScoreOfPlayerOnPitch=0;
+        totalBallsPlayed=0;
         for (int i = 1; i <= noOfOvers * 6; i++) {
             Random r = GeneralUtils.getRandomFunction();
             int run = r.nextInt(8);
@@ -65,21 +71,26 @@ public class Match {
                 System.out.println("Inning Over : No remaining players are left in the team");
                 break;
             }
+            if(run!=7)
+            totalScoreOfPLayer+=run;
+            else
+            {
+               // PlayersDetail playerUpdate=new PlayersDetail();
+                Teams team=Teams.valueOf(teamPlaying);
+                ScoreBoard.addDetail(currentPlayerOnStrike,team, PlayersDetail.PlayerType.BATSMAN,totalScoreOfPLayer,0,totalBallsPlayed);
+                totalScoreOfPLayer=0;
+                totalBallsPlayed=0;
+            }
         }
+        Teams team=Teams.valueOf(teamPlaying);
+        ScoreBoard.addDetail(currentPlayerOnStrike,team, PlayersDetail.PlayerType.BATSMAN,totalScoreOfPLayer,0,totalBallsPlayed);
+        ScoreBoard.addDetail(currentPlayerOnPitch,team, PlayersDetail.PlayerType.BATSMAN,totalScoreOfPLayer,0,totalBallsPlayed);
+
         return score;
     }
 
     public int getTotalWickets(String team) {
         return totalWicketsOfTeam;
-    }
-
-    public static List<String> retrivePlayerList(String teamPlaying) {
-        Teams[] teams = Teams.values();
-        for (Teams team : teams) {
-            if (team.name().equalsIgnoreCase(teamPlaying))
-                return team.getPlayerList();
-        }
-        return null;
     }
 
     public static void swapPlayersPosition() {
