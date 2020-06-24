@@ -11,6 +11,7 @@ public enum Teams {
     RBC(Arrays.asList("VIRAT", "PARTHIV", "UMESH", "PAWAN", "SIRAJ"));
 
     private  List<String > playerList;
+
     private Teams(List<String> playerList)
     {
         this.playerList=playerList;
@@ -19,22 +20,11 @@ public enum Teams {
     {
         return this.playerList;
     }
-    public static void addPlayerDetails()
-    {
-        Teams[] teams = Teams.values();
-        for (Teams team : teams) {
-          List<String> players=team.getPlayerList();
-          for(String playerName:players)
-          {
-            ScoreBoard.addDetail(playerName,team, PlayersDetail.PlayerType.BATSMAN,0,0,0);
-          }
-        }
-    }
 
-    public static List<String> retrivePlayerList(String teamPlaying) {
+    public static List<String> retrivePlayerList(Teams teamPlaying) {
         Teams[] teams = Teams.values();
         for (Teams team : teams) {
-            if (team.name().equalsIgnoreCase(teamPlaying))
+            if (team.equals(teamPlaying))
                 return team.getPlayerList();
         }
         return null;
